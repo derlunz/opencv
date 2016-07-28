@@ -32,6 +32,8 @@
   <Calibrate_AssumeZeroTangentialDistortion>1</Calibrate_AssumeZeroTangentialDistortion>
   <!-- If true (non-zero) the principal point is not changed during the global optimization.-->
   <Calibrate_FixPrincipalPointAtTheCenter> 1 </Calibrate_FixPrincipalPointAtTheCenter>
+  <!-- If true (non-zero) use the fisheye distortion model instead of phinhole for calibration.-->
+  <Calibrate_UseFisheyeModel> 0 </Calibrate_UseFisheyeModel>
   
   <!-- The name of the output log file. -->
   <Write_outputFileName>"out_camera_data.xml"</Write_outputFileName>
