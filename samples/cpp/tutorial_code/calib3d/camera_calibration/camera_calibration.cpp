@@ -513,15 +513,15 @@ static bool runCalibration( Settings& s, Size& imageSize, Mat& cameraMatrix, Mat
     double rms;
 
     if (s.useFisheye) {
-        Mat _rvecs, _tvecs;
+        vector<Mat>  _rvecs, _tvecs;
         rms = fisheye::calibrate(objectPoints, imagePoints, imageSize, cameraMatrix, distCoeffs, _rvecs,
                                  _tvecs, s.flag);
 
-        rvecs.reserve(_rvecs.rows);
-        tvecs.reserve(_tvecs.rows);
+        rvecs.reserve(_rvecs.size());
+        tvecs.reserve(_tvecs.size());
         for(int i = 0; i < int(objectPoints.size()); i++){
-            rvecs.push_back(_rvecs.row(i));
-            tvecs.push_back(_tvecs.row(i));
+            rvecs.push_back(_rvecs.at(i));
+            tvecs.push_back(_tvecs.at(i));
         }
     } else {
         rms = calibrateCamera(objectPoints, imagePoints, imageSize, cameraMatrix, distCoeffs, rvecs, tvecs,
