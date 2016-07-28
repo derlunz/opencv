@@ -48,7 +48,7 @@ public:
                   << "Write_extrinsicParameters"   << writeExtrinsics
                   << "Write_outputFileName"  << outputFileName
 
-                  << "Show_UndistortedImage" << showUndistorsed
+                  << "Show_UndistortedImage" << showUndistorted
 
                   << "Input_FlipAroundHorizontalAxis" << flipVertical
                   << "Input_Delay" << delay
@@ -70,7 +70,7 @@ public:
         node["Calibrate_FixPrincipalPointAtTheCenter"] >> calibFixPrincipalPoint;
         node["Calibrate_UseFisheyeModel"] >> useFisheye;
         node["Input_FlipAroundHorizontalAxis"] >> flipVertical;
-        node["Show_UndistortedImage"] >> showUndistorsed;
+        node["Show_UndistortedImage"] >> showUndistorted;
         node["Input"] >> input;
         node["Input_Delay"] >> delay;
         validate();
@@ -193,7 +193,7 @@ public:
     bool calibFixPrincipalPoint; // Fix the principal point at the center
     bool flipVertical;           // Flip the captured images around the horizontal axis
     string outputFileName;       // The name of the file where to write
-    bool showUndistorsed;        // Show undistorted images after calibration
+    bool showUndistorted;        // Show undistorted images after calibration
     string input;                // The input ->
     bool useFisheye;             // use fisheye camera model for calibration
 
@@ -353,7 +353,7 @@ int main(int argc, char* argv[])
 
         if( mode == CAPTURING )
         {
-            if(s.showUndistorsed)
+            if(s.showUndistorted)
                 msg = format( "%d/%d Undist", (int)imagePoints.size(), s.nrFrames );
             else
                 msg = format( "%d/%d", (int)imagePoints.size(), s.nrFrames );
@@ -366,7 +366,7 @@ int main(int argc, char* argv[])
         //! [output_text]
         //------------------------- Video capture  output  undistorted ------------------------------
         //! [output_undistorted]
-        if( mode == CALIBRATED && s.showUndistorsed )
+        if( mode == CALIBRATED && s.showUndistorted )
         {
             Mat temp = view.clone();
             undistort(temp, view, cameraMatrix, distCoeffs);
@@ -381,7 +381,7 @@ int main(int argc, char* argv[])
             break;
 
         if( key == 'u' && mode == CALIBRATED )
-           s.showUndistorsed = !s.showUndistorsed;
+           s.showUndistorted = !s.showUndistorted;
 
         if( s.inputCapture.isOpened() && key == 'g' )
         {
@@ -393,7 +393,7 @@ int main(int argc, char* argv[])
 
     // -----------------------Show the undistorted image for the image list ------------------------
     //! [show_results]
-    if( s.inputType == Settings::IMAGE_LIST && s.showUndistorsed )
+    if( s.inputType == Settings::IMAGE_LIST && s.showUndistorted )
     {
         Mat view, rview, map1, map2;
 
